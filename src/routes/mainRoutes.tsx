@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import PodcastsList from "../views/podcastsList";
+import PodcastsList from "../views/podcastsList/podcastsList";
 import React from "react";
-import PodcastDetails from "../views/podcastDetails";
+import PodcastDetails from "../views/podcastDetails/podcastDetails";
 
 const MainRoutes = () => {
     return (

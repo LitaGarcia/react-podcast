@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Podcast} from "../domain/podcast";
-import {HttpPodcastRepository} from "../infraestructure/repositories/http/httpPodcastRepository";
-import {execute} from "../use-cases/getFavouritesTopPodcasts";
-import {LocalStoreRepository} from "../infraestructure/repositories/localStore/localStoreRepository";
-import {SystemClock} from "../infraestructure/time/systemClock";
-import Header from "./header";
-import {TargetValueEvent} from "../domain/targetValueEvent";
-import PodcastItem from "./podcastItem";
+import {Podcast} from "../../domain/podcast";
+import {HttpPodcastRepository} from "../../infraestructure/repositories/http/httpPodcastRepository";
+import {execute} from "../../use-cases/getFavouritesTopPodcasts";
+import {LocalStoreRepository} from "../../infraestructure/repositories/localStore/localStoreRepository";
+import {SystemClock} from "../../infraestructure/time/systemClock";
+import Header from "../header/header";
+import {TargetValueEvent} from "../../domain/targetValueEvent";
+import PodcastItem from "../podcastItem/podcastItem";
 
 export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
