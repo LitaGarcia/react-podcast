@@ -1,7 +1,4 @@
-// src/infrastructure/repositories/productRepository.ts
-
-
-import {PodcastRepository} from "../../domain/podcastRepository";
+import {PodcastRepository} from "../../../domain/podcastRepository";
 import {Entry} from "./podcastFeedResponse";
 
 export const HttpPodcastRepository = (): PodcastRepository => ({

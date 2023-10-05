@@ -1,23 +1,22 @@
 import {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../domain/podcast";
-import {HttpPodcastRepository} from "../infraestructure/repositories/httpPodcastRepository";
+import {HttpPodcastRepository} from "../infraestructure/repositories/http/httpPodcastRepository";
 import {execute} from "../use-cases/getFavouritesTopPodcasts";
+import {LocalStoreRepository} from "../infraestructure/repositories/localStore/localStoreRepository";
+import {SystemClock} from "../infraestructure/time/systemClock";
 
-function PodcastList() {
+function Landing() {
     const [podcast, setPodcast] = useState<Podcast[]>([]);
 
     const getPodcasts = useCallback(async () => {
-        try {
-            const response = await execute(HttpPodcastRepository())
+        {
+            const response = await execute(HttpPodcastRepository(), LocalStoreRepository(), SystemClock())
             setPodcast(response);
-        }
-        catch (exception) {
-            console.error(exception);
         }
     }, []);
 
     useEffect(() => {
-        getPodcasts().then(r => console.log(r));
+        getPodcasts().then(resp => resp);
     }, []);
 
     const html = podcast.map((podcast1:Podcast) => {
@@ -34,4 +33,4 @@ function PodcastList() {
     );
 }
 
-export default PodcastList;
+export default Landing;

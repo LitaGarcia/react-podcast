@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import PodcastList from "./views/podcast-list";
+import Landing from "./views/landing";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         </a>
       </header>
 
-        <PodcastList></PodcastList>
+        <Landing></Landing>
 
     </div>
   );
