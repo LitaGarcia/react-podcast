@@ -1,8 +1,10 @@
+import {Podcast} from "./podcast";
 
 
 export interface storeRepository {
 
-    saveLocalStorage: (key: string, dataToSave: any) => void;
-    getLocalStorage: (dataToGet: any) => any;
+    save: (podcasts: Podcast[], storedAt: number) => void;
+    getPodcasts: () => Podcast[];
+    getStoredDate: () => number;
 
 }

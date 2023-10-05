@@ -1,22 +1,19 @@
 import {PodcastRepository} from "../domain/podcastRepository";
 import {storeRepository} from "../domain/storeRepository";
 import {Clock} from "../domain/clock";
-import {Podcast} from "../domain/podcast";
 
 export const execute = async (podcastRepository: PodcastRepository, localStoreRepository: storeRepository, clock: Clock) => {
     const dayInMs = 24 * 60 * 60 * 1000;
     const currentDay = clock.now();
-    const lastDayStored = localStoreRepository.getLocalStorage('storedAt');
+    const lastDayStored = localStoreRepository.getStoredDate();
 
 
-    if (!lastDayStored || currentDay - lastDayStored > dayInMs) {
+    if (lastDayStored === 0 || currentDay - lastDayStored > dayInMs) {
         const podcastList = await podcastRepository.getPodcast();
-        localStoreRepository.saveLocalStorage('podcastList',  JSON.stringify(podcastList))
-        localStoreRepository.saveLocalStorage('storedAt', currentDay);
+        localStoreRepository.save(podcastList, currentDay)
         return podcastList
     } else {
-        const podcastList: Podcast[] = JSON.parse(localStoreRepository.getLocalStorage('podcastList'))
-        return podcastList
+        return localStoreRepository.getPodcasts()
     }
 
 
