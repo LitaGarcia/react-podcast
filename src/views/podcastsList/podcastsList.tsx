@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../domain/podcast";
 import {HttpPodcastRepository} from "../../infraestructure/repositories/http/httpPodcastRepository";
-import {execute} from "../../use-cases/getPodcastsTop";
+import {GetPodcastsTop} from "../../use-cases/getPodcastsTop";
 import {LocalStorePodcastRepository} from "../../infraestructure/repositories/localStore/localStorePodcastRepository";
 import {SystemClock} from "../../infraestructure/time/systemClock";
 import Header from "../header/header";
@@ -11,11 +11,12 @@ import PodcastItem from "../podcastItem/podcastItem";
 export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const [searchName, setSearchName] = useState('');
+    const getPodcastsTop = new GetPodcastsTop();
     const searchByName = (ev: TargetValueEvent ) => setSearchName(ev.currentTarget.value);
 
     const getPodcasts = useCallback(async () => {
         {
-            const response = await execute(HttpPodcastRepository(), LocalStorePodcastRepository(), SystemClock())
+            const response = await getPodcastsTop.execute(HttpPodcastRepository(), LocalStorePodcastRepository(), SystemClock())
             setPodcasts(response);
         }
     }, []);
