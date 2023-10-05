@@ -5,13 +5,14 @@ import {execute} from "../use-cases/getFavouritesTopPodcasts";
 import {LocalStoreRepository} from "../infraestructure/repositories/localStore/localStoreRepository";
 import {SystemClock} from "../infraestructure/time/systemClock";
 import Header from "./header";
-import {useNavigate} from "react-router-dom";
+import {TargetValueEvent} from "../domain/targetValueEvent";
+import PodcastItem from "./podcastItem";
 
-function Landing() {
+export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
-    const navigate = useNavigate();
+
     const [searchName, setSearchName] = useState('');
-    const searchByName = (ev: { currentTarget: { value: React.SetStateAction<string>; }; }) => setSearchName(ev.currentTarget.value);
+    const searchByName = (ev: TargetValueEvent ) => setSearchName(ev.currentTarget.value);
 
     const getPodcasts = useCallback(async () => {
         {
@@ -25,28 +26,20 @@ function Landing() {
     }, []);
 
 
-    const goToDetails = (id: string) => {
-        navigate(`/podcast/${id}`)
-    }
 
     const podcastList = podcasts
         .filter((podcast) =>
             podcast.name.toLowerCase().includes(searchName.toLowerCase())
-        ).map((podcast:Podcast, i: number) => {
+        )
+        .map((podcast:Podcast, i) => {
     return (
-
-        <li onClick={() => goToDetails(podcast.id)}  key={i}>
-            <img src={podcast.img} alt={podcast.name}></img>
-            <p>{podcast.name}</p>
-            <p>{podcast.author}</p>
-        </li>
+        <PodcastItem podcast={podcast} key={i}/>
     );
-});
+    });
 
     return (
             <>
                 <Header></Header>
-
                 <main>
                     <form>
                         <input
@@ -57,11 +50,9 @@ function Landing() {
                             value={searchName}
                         ></input>
                     </form>
-
                     <ul>{podcastList}</ul>
                 </main>
             </>
     );
 }
 
-export default Landing;

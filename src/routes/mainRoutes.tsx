@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import Landing from "../views/landing";
+import PodcastsList from "../views/podcastsList";
 import React from "react";
 import PodcastDetails from "../views/podcastDetails";
 
 const MainRoutes = () => {
     return (
         <Routes>
-            <Route path='/' element={<Landing/>} />
+            <Route path='/' element={<PodcastsList/>} />
             <Route path='/podcast/:podcastId' element={<PodcastDetails/>} />
         </Routes>
     );
