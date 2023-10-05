@@ -2,12 +2,13 @@ import {useCallback, useEffect, useState} from "react";
 
 import {HttpPodcastRepository} from "../../infraestructure/repositories/http/httpPodcastRepository";
 import {SystemClock} from "../../infraestructure/time/systemClock";
-import {PodcastLookUp} from "../../domain/podcastLookUp";
+import {Episode, PodcastLookUp} from "../../domain/podcastLookUp";
 import {
     LocalStoreLookupRepository
 } from "../../infraestructure/repositories/localStore/localStorePodcastLookupRepository";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {GetPodcastLoookupUseCase} from "../../use-cases/getPodcastLookup";
+import PodcastEpisode from "../podcastEpisode/podcastEpisode";
 
 function PodcastDetails() {
     const {podcastId} = useParams();
@@ -22,10 +23,21 @@ function PodcastDetails() {
         getPodcast().then(resp => resp);
     }, []);
 
+
+    const episodeList = podcast?.episodes.map((episode: Episode, i: number) => {
+        return (
+                <PodcastEpisode episode={episode}  key={i}/>
+        )
+    })
     return (
+        <>
         <p>
             {podcast?.title}
-    </p>
+        </p>
+        <ul>
+            {episodeList}
+        </ul>
+            </>
     )
 
 }
