@@ -1,17 +1,20 @@
-import {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../domain/podcast";
 import {HttpPodcastRepository} from "../infraestructure/repositories/http/httpPodcastRepository";
 import {execute} from "../use-cases/getFavouritesTopPodcasts";
 import {LocalStoreRepository} from "../infraestructure/repositories/localStore/localStoreRepository";
 import {SystemClock} from "../infraestructure/time/systemClock";
+import Header from "./header";
+import {useNavigate} from "react-router-dom";
 
 function Landing() {
-    const [podcast, setPodcast] = useState<Podcast[]>([]);
+    const [podcasts, setPodcasts] = useState<Podcast[]>([]);
+    const navigate = useNavigate();
 
     const getPodcasts = useCallback(async () => {
         {
             const response = await execute(HttpPodcastRepository(), LocalStoreRepository(), SystemClock())
-            setPodcast(response);
+            setPodcasts(response);
         }
     }, []);
 
@@ -19,16 +22,31 @@ function Landing() {
         getPodcasts().then(resp => resp);
     }, []);
 
-    const html = podcast.map((podcast1:Podcast) => {
+
+    const goToDetails = (id: string) => {
+        console.log(id)
+        console.log(podcasts)
+        navigate(`/podcast/${id}`)
+    }
+
+    const podcastList = podcasts.map((podcast:Podcast, i: number) => {
     return (
-        <li>
-            <p>{podcast1.name}</p>
+
+        <li onClick={() => goToDetails(podcast.id)}  key={i}>
+            <img src={podcast.img} alt={podcast.name}></img>
+            <p>{podcast.name}</p>
+            <p>{podcast.author}</p>
         </li>
     );
 });
+
     return (
-            < >
-            <ul>{html}</ul>
+            <>
+                <Header></Header>
+
+                <main>
+                    <ul>{podcastList}</ul>
+                </main>
             </>
     );
 }

@@ -9,7 +9,7 @@ export const HttpPodcastRepository = (): PodcastRepository => ({
         const podcastList = await response.json();
         return podcastList.feed.entry.map((p: Entry ) => {
             return {
-                id: p.id.attributes,
+                id: p.id.attributes["im:id"],
                 img: p['im:image'][2].label,
                 name: p['im:name'].label,
                 author: p['im:artist'].label,
