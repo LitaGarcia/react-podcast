@@ -1,10 +1,10 @@
-import {storeRepository} from "../../../domain/storeRepository";
+import {StorePodcastRepository} from "../../../domain/storePodcastRepository";
 import {PodcastEntity} from "./podcastEntity";
 import {Podcast} from "../../../domain/podcast";
 
 const key = 'podcasts'
 
-export const LocalStoreRepository = (): storeRepository => ({
+export const LocalStorePodcastRepository = (): StorePodcastRepository => ({
 
     save: (podcasts: Podcast[], storedAt: number) => {
         const podcastToSave: PodcastEntity = {

@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../domain/podcast";
 import {HttpPodcastRepository} from "../../infraestructure/repositories/http/httpPodcastRepository";
-import {execute} from "../../use-cases/getFavouritesTopPodcasts";
-import {LocalStoreRepository} from "../../infraestructure/repositories/localStore/localStoreRepository";
+import {execute} from "../../use-cases/getPodcastsTop";
+import {LocalStorePodcastRepository} from "../../infraestructure/repositories/localStore/localStorePodcastRepository";
 import {SystemClock} from "../../infraestructure/time/systemClock";
 import Header from "../header/header";
 import {TargetValueEvent} from "../../domain/targetValueEvent";
@@ -16,7 +16,7 @@ export default function PodcastsList() {
 
     const getPodcasts = useCallback(async () => {
         {
-            const response = await execute(HttpPodcastRepository(), LocalStoreRepository(), SystemClock())
+            const response = await execute(HttpPodcastRepository(), LocalStorePodcastRepository(), SystemClock())
             setPodcasts(response);
         }
     }, []);
