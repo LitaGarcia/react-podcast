@@ -15,9 +15,7 @@ export const execute = async (podcastRepository: PodcastRepository, localStoreRe
         localStoreRepository.saveLocalStorage('storedAt', currentDay);
         return podcastList
     } else {
-        console.log('no ha pasado más de un día')
         const podcastList: Podcast[] = JSON.parse(localStoreRepository.getLocalStorage('podcastList'))
-        console.log(podcastList)
         return podcastList
     }
 
