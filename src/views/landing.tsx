@@ -24,8 +24,6 @@ function Landing() {
 
 
     const goToDetails = (id: string) => {
-        console.log(id)
-        console.log(podcasts)
         navigate(`/podcast/${id}`)
     }
 
