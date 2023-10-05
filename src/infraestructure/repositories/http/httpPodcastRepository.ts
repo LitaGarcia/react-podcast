@@ -20,10 +20,12 @@ export const HttpPodcastRepository = (): PodcastRepository => ({
         });
     },
     getPodcastById: async (podcastId: number): Promise<PodcastLookUp> => {
+
         const response = await fetch(
             `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode&limit=25`
         );
         const podcastLookupResponse: PodcastLookUpResponse = await response.json();
+        console.log(podcastLookupResponse)
         const podcastEpisodes = podcastLookupResponse.results.slice(1);
         return {
             id: podcastId,

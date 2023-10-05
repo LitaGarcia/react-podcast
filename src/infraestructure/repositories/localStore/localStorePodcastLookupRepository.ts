@@ -11,16 +11,16 @@ export const LocalStoreLookupRepository = (): StorePodcastLookupRepository => ({
             storedAt: storedAt,
             podcastLookup: podcastLookup
         }
-        localStorage.setItem(key, JSON.stringify(podcastToSave))
+        localStorage.setItem(`${key}-${podcastLookup.id}`, JSON.stringify(podcastToSave))
     },
 
-    getPodcastLookup: (): PodcastLookUp => {
-        const savedPodcast: PodcastLookupEntity = JSON.parse(localStorage.getItem(key) ?? '{storedAt: 0, podcastLookup: {}}')
+    getPodcastLookup: (id: number): PodcastLookUp => {
+        const savedPodcast: PodcastLookupEntity = JSON.parse(localStorage.getItem(`${key}-${id}`) ?? '{storedAt: 0, podcastLookup: {}}')
         return savedPodcast.podcastLookup
     },
 
-    getStoredDate: (): number => {
-        const savedPodcast: PodcastLookupEntity = JSON.parse(localStorage.getItem(key) ?? '{"storedAt": 0, "podcasts": []}')
+    getStoredDate: (id:number): number => {
+        const savedPodcast: PodcastLookupEntity = JSON.parse(localStorage.getItem(`${key}-${id}`) ?? '{"storedAt": 0, "podcasts": []}')
         return savedPodcast.storedAt
     }
 })

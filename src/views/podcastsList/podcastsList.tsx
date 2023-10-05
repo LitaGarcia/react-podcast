@@ -10,7 +10,6 @@ import PodcastItem from "../podcastItem/podcastItem";
 
 export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
-
     const [searchName, setSearchName] = useState('');
     const searchByName = (ev: TargetValueEvent ) => setSearchName(ev.currentTarget.value);
 
