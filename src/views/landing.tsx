@@ -10,6 +10,8 @@ import {useNavigate} from "react-router-dom";
 function Landing() {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const navigate = useNavigate();
+    const [searchName, setSearchName] = useState('');
+    const searchByName = (ev: { currentTarget: { value: React.SetStateAction<string>; }; }) => setSearchName(ev.currentTarget.value);
 
     const getPodcasts = useCallback(async () => {
         {
@@ -27,7 +29,10 @@ function Landing() {
         navigate(`/podcast/${id}`)
     }
 
-    const podcastList = podcasts.map((podcast:Podcast, i: number) => {
+    const podcastList = podcasts
+        .filter((podcast) =>
+            podcast.name.toLowerCase().includes(searchName.toLowerCase())
+        ).map((podcast:Podcast, i: number) => {
     return (
 
         <li onClick={() => goToDetails(podcast.id)}  key={i}>
@@ -43,6 +48,16 @@ function Landing() {
                 <Header></Header>
 
                 <main>
+                    <form>
+                        <input
+                            type="text"
+                            name="searchName"
+                            id="searchName"
+                            onChange={searchByName}
+                            value={searchName}
+                        ></input>
+                    </form>
+
                     <ul>{podcastList}</ul>
                 </main>
             </>
