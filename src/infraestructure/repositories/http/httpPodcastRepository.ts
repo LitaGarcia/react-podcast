@@ -25,7 +25,6 @@ export const HttpPodcastRepository = (): PodcastRepository => ({
             `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode&limit=25`
         );
         const podcastLookupResponse: PodcastLookUpResponse = await response.json();
-        console.log(podcastLookupResponse)
         const podcastEpisodes = podcastLookupResponse.results.slice(1);
         return {
             id: podcastId,
