@@ -1,4 +1,4 @@
-export interface PodcastFeedResponse {
+export interface PodcastsResponse {
     feed: Feed;
 }
 

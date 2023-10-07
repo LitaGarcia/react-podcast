@@ -1,7 +1,6 @@
-import {Podcast} from "./podcast";
-import {PodcastLookUp} from "./podcastLookUp";
+import {Podcast} from "./model/podcast";
 
 export interface PodcastRepository {
     getPodcast: () => Promise<Podcast[]>,
-    getPodcastById: (podcastId: number) => Promise<PodcastLookUp>
+    getPodcastById: (id: number) => Promise<Podcast>
 }

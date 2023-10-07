@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import MainRoutes from "./routes/mainRoutes";
+import {BrowserRouter} from 'react-router-dom';
+import MainRoutes from "./presentation/routes/mainRoutes";
 
 
 ReactDOM.render(

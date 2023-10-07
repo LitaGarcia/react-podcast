@@ -1,4 +1,4 @@
-export interface PodcastLookUpResponse {
+export interface DetailedPodcastResponse {
     resultCount: number;
     results:     Result[];
 }
@@ -11,5 +11,4 @@ export interface Result {
     artistName: string;
     trackName: string;
     artworkUrl60: string;
-
 }
