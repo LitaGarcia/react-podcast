@@ -2,13 +2,16 @@ import {PodcastRepository} from "../../../domain/podcastRepository";
 import {Entry, PodcastsResponse} from "./podcastsResponse";
 import {DetailedPodcastResponse, Result} from "./detailedPodcastResponse";
 import {Podcast} from "../../../domain/model/podcast";
+import {HttpClient} from "./httpClient";
 
-export const HttpPodcastRepository = (): PodcastRepository => ({
-    getPodcast: async (): Promise<Podcast[]> => {
-        const response = await fetch(
-            'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json'
-        );
-        const podcastList: PodcastsResponse = await response.json();
+export class HttpPodcastRepository implements PodcastRepository {
+    private _httpClient: HttpClient;
+
+    constructor(httpClient: HttpClient) {
+        this._httpClient = httpClient;
+    }
+    getPodcast = async (): Promise<Podcast[]> => {
+        const podcastList: PodcastsResponse = await this._httpClient.fetch('https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json');
         return podcastList.feed.entry.map((p: Entry ) => {
             return {
                 id: Number.parseInt(p.id.attributes["im:id"]),
@@ -16,15 +19,11 @@ export const HttpPodcastRepository = (): PodcastRepository => ({
                 name: p['im:name'].label,
                 author: p['im:artist'].label,
                 description: p.summary.label
-            };
-        });
-    },
-    getPodcastById: async (id: number): Promise<Podcast> => {
-
-        const response = await fetch(
-            `https://itunes.apple.com/lookup?id=${id}&entity=podcastEpisode&limit=25`
-        );
-        const podcastLookupResponse: DetailedPodcastResponse = await response.json();
+            }
+        })
+    }
+    getPodcastById = async (id: number): Promise<Podcast> => {
+        const podcastLookupResponse: DetailedPodcastResponse = await this._httpClient.fetch(`https://itunes.apple.com/lookup?id=${id}&entity=podcastEpisode&limit=25`);
         const podcastEpisodes = podcastLookupResponse.results.slice(1);
         return {
             id: id,
@@ -42,4 +41,4 @@ export const HttpPodcastRepository = (): PodcastRepository => ({
             })
         }
     }
-});
+}

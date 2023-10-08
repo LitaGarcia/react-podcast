@@ -2,8 +2,9 @@ import {Clock} from "../../../domain/clock";
 import {PodcastRepository} from "../../../domain/podcastRepository";
 import {Podcast} from "../../../domain/model/podcast";
 import {PodcastDTO} from "./podcastDTO";
+import {CacheRepository} from "../../../domain/cacheRepository";
 
-export class localStoreCacheRepository implements localStoreCacheRepository {
+export class localStoreCacheRepository implements CacheRepository {
     private _podcastRepository: PodcastRepository;
     private _clock: Clock;
     constructor (clock: Clock, podcastRepository: PodcastRepository) {

@@ -2,6 +2,7 @@ import {GetDetailedPodcast} from "./getDetailedPodcast";
 import {SystemClock} from "../infraestructure/time/systemClock";
 import {HttpPodcastRepository} from "../infraestructure/repositories/http/httpPodcastRepository";
 import {localStoreCacheRepository} from "../infraestructure/repositories/localStore/localStoreCacheRepository";
+import {HttpClient} from "../infraestructure/repositories/http/httpClient";
 
 describe( 'getPodcastLookup' ,() => {
     const podcastDetails = {
@@ -45,7 +46,7 @@ describe( 'getPodcastLookup' ,() => {
     }
 
     it ('should return a podcast with episodes', async () => {
-        const mockCachePodcastRepository = new localStoreCacheRepository(SystemClock(), HttpPodcastRepository());
+        const mockCachePodcastRepository = new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient()));
 
         mockCachePodcastRepository.getById = jest.fn(() => Promise.resolve(podcastDetails));
         mockCachePodcastRepository.get = jest.fn(() => Promise.resolve(podcast));

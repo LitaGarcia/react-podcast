@@ -30,18 +30,8 @@ export interface IDAttributes {
 
 export interface Artist {
     label:       string;
-    attributes?: ArtistAttributes;
-}
-
-export interface ArtistAttributes {
-    href: string;
 }
 
 export interface Image {
     label:      string;
-    attributes: IMImageAttributes;
-}
-
-export interface IMImageAttributes {
-    height: string;
 }

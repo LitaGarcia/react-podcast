@@ -7,11 +7,12 @@ import Header from "../header/header";
 import {TargetValueEvent} from "./targetValueEvent";
 import PodcastItem from "../podcastItem/podcastItem";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
+import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
 
 export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<any>([]);
     const [searchName, setSearchName] = useState('');
-    const getPodcastsTop = new GetPodcastsTop(new localStoreCacheRepository(SystemClock(), HttpPodcastRepository()));
+    const getPodcastsTop = new GetPodcastsTop(new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient())));
     const searchByName = (ev: TargetValueEvent ) => setSearchName(ev.currentTarget.value);
 
     const getPodcasts = useCallback(async () => {
