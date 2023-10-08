@@ -11,4 +11,6 @@ export interface Result {
     artistName: string;
     trackName: string;
     artworkUrl60: string;
+    description: string;
+    episodeUrl: string;
 }

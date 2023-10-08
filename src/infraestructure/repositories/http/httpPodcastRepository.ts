@@ -23,6 +23,7 @@ export class HttpPodcastRepository implements PodcastRepository {
         })
     }
     getPodcastById = async (id: number): Promise<Podcast> => {
+
         const podcastLookupResponse: DetailedPodcastResponse = await this._httpClient.fetch(`https://itunes.apple.com/lookup?id=${id}&entity=podcastEpisode&limit=25`);
         const podcastEpisodes = podcastLookupResponse.results.slice(1);
         return {
@@ -36,7 +37,9 @@ export class HttpPodcastRepository implements PodcastRepository {
                     id: episode.trackId,
                     title: episode.trackName,
                     releaseDate: episode.releaseDate,
-                    trackTime: episode.trackTimeMillis
+                    trackTime: episode.trackTimeMillis,
+                    description: episode.description,
+                    url: episode.episodeUrl
                 }
             })
         }

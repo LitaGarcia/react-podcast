@@ -15,7 +15,9 @@ describe( 'getPodcastLookup' ,() => {
             id: 123,
             title: 'episode.trackName',
             releaseDate: 'episode.releaseDate',
-            trackTime: 'episode.trackTimeMillis'
+            trackTime: 'episode.trackTimeMillis',
+            url: 'episodeUrl',
+            description: 'description'
         }]
     }
     const podcast = [
@@ -40,7 +42,9 @@ describe( 'getPodcastLookup' ,() => {
                 id: 123,
                 title: 'episode.trackName',
                 releaseDate: 'episode.releaseDate',
-                trackTime: 'episode.trackTimeMillis'
+                trackTime: 'episode.trackTimeMillis',
+                description: 'description',
+                url: 'url'
             }
         ]
     }

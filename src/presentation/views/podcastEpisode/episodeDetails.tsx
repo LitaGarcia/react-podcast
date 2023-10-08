@@ -1,15 +1,15 @@
-import {useCallback, useEffect, useState} from "react";
-
+import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
+import {HttpPodcastRepository} from "../../../infraestructure/repositories/http/httpPodcastRepository";
 import {SystemClock} from "../../../infraestructure/time/systemClock";
 import {useParams} from "react-router-dom";
-import {GetDetailedPodcast} from "../../../application/getDetailedPodcast";
-import PodcastDetailsEpisodes from "./podcastDetailsEpisodes";
-import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
+import {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../../domain/model/podcast";
-import {HttpPodcastRepository} from "../../../infraestructure/repositories/http/httpPodcastRepository";
-import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
+import {GetDetailedPodcast} from "../../../application/getDetailedPodcast";
+import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
+import {Episode} from "../../../domain/model/episode";
 
-function PodcastDetails() {
+
+export default function EpisodeDetails( ){
     const httpClient = new HttpClient()
     const httpPodcastRepository = new HttpPodcastRepository(httpClient);
     const systemClock = SystemClock();
@@ -19,6 +19,7 @@ function PodcastDetails() {
 
     const getPodcast = useCallback(async () => {
         const response = await getPodcastLookup.execute(+podcastId!)
+        console.log(response)
         setPodcast(response);
 
     }, []);
@@ -28,18 +29,23 @@ function PodcastDetails() {
         getPodcast();
     }, []);
 
-    return (
-        <>
-        <p>
-        </p>
-        <ul>
-            {
-               podcast ? <PodcastDetailsEpisodes podcast={podcast} />  : null
-            }
 
-        </ul>
+    const episodeList = podcast?.episodes?.map((episode: Episode, i: number) => {
+        console.log(podcast)
+        return (
+            <>
+                <li>
+                    <audio  controls>
+                        <source src={episode.url} type="audio/mpeg" />
+                    </audio>
+                </li>
             </>
-    )
+        )
+    })
 
+return(
+    <>
+        <ul>{episodeList}</ul>
+    </>
+)
 }
-export default PodcastDetails

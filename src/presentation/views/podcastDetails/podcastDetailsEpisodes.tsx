@@ -2,21 +2,24 @@ import {useNavigate} from "react-router-dom";
 import {Episode} from "../../../domain/model/episode";
 
 
-export default function PodcastEpisode(props: any){
-    console.log(props)
+export default function PodcastDetailsEpisodes(props: any ){
     const navigate = useNavigate();
-    const episodeList = props.episodes?.map((episode: Episode, i: number) => {
+
+
+    const episodeList = props.podcast.episodes.map((episode: Episode, i: number) => {
         return (
             <>
-            <li onClick={() => navigate(`/podcast/${props.id}/episode/${episode.id}`) } key={i}>
+            <li onClick={() => navigate(`/podcast/${props.podcast.id}/episode/${episode.id}`) } key={i}>
                 <p>{episode.title}</p>
             </li>
             </>
         )
     })
+
+
 return(
     <>
-
+        <p>{props.podcast.episodes[0].id}</p>
         <p>{episodeList}</p>
 
     </>
