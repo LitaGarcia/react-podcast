@@ -6,7 +6,7 @@ import {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../../domain/model/podcast";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {Episode} from "../../../domain/model/episode";
-import {GetDetailedEpisode} from "../../../application/getDetailedEpisode";
+import {GetDetailedEpisode} from "../../../application/getDetailedEpisode/getDetailedEpisode";
 
 
 export default function EpisodeDetails( ){

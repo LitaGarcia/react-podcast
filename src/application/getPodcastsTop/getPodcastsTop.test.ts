@@ -1,8 +1,8 @@
-import {SystemClock} from "../infraestructure/time/systemClock";
-import {HttpPodcastRepository} from "../infraestructure/repositories/http/httpPodcastRepository";
-import {localStoreCacheRepository} from "../infraestructure/repositories/localStore/localStoreCacheRepository";
-import {GetPodcastsTop} from "./getPodcastsTop";
-import {HttpClient} from "../infraestructure/repositories/http/httpClient";
+import {SystemClock} from "../../infraestructure/time/systemClock";
+import {HttpPodcastRepository} from "../../infraestructure/repositories/http/httpPodcastRepository";
+import {localStoreCacheRepository} from "../../infraestructure/repositories/localStore/localStoreCacheRepository";
+import {GetPodcastsTop} from "../getPodcastsTop";
+import {HttpClient} from "../../infraestructure/repositories/http/httpClient";
 
 describe( 'getPodcastsTop' ,() => {
     const podcast = [

@@ -1,5 +1,5 @@
-import {CacheRepository} from "../domain/cacheRepository";
-import {Podcast} from "../domain/model/podcast";
+import {CacheRepository} from "../../domain/cacheRepository";
+import {Podcast} from "../../domain/model/podcast";
 
 export class GetDetailedPodcast {
     private _cachePodcastRepository: CacheRepository;

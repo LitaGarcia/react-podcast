@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from "react";
 
 import {SystemClock} from "../../../infraestructure/time/systemClock";
 import {useParams} from "react-router-dom";
-import {GetDetailedPodcast} from "../../../application/getDetailedPodcast";
+import {GetDetailedPodcast} from "../../../application/getDetailedPodcast/getDetailedPodcast";
 import PodcastDetailsEpisodes from "./podcastDetailsEpisodes";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {Podcast} from "../../../domain/model/podcast";

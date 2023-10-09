@@ -1,10 +1,10 @@
-import {GetDetailedPodcast} from "./getDetailedPodcast";
-import {SystemClock} from "../infraestructure/time/systemClock";
-import {HttpPodcastRepository} from "../infraestructure/repositories/http/httpPodcastRepository";
-import {localStoreCacheRepository} from "../infraestructure/repositories/localStore/localStoreCacheRepository";
-import {HttpClient} from "../infraestructure/repositories/http/httpClient";
+import {SystemClock} from "../../infraestructure/time/systemClock";
+import {HttpPodcastRepository} from "../../infraestructure/repositories/http/httpPodcastRepository";
+import {localStoreCacheRepository} from "../../infraestructure/repositories/localStore/localStoreCacheRepository";
+import {HttpClient} from "../../infraestructure/repositories/http/httpClient";
+import {GetDetailedEpisode} from "./getDetailedEpisode";
 
-describe( 'getPodcastLookup' ,() => {
+describe( 'getDetailedEpisode' ,() => {
     const podcastDetails = {
         id: 1535809341,
         img: 'im:image',
@@ -49,14 +49,15 @@ describe( 'getPodcastLookup' ,() => {
         ]
     }
 
-    it ('should return a podcast with episodes', async () => {
+    it ('should return a podcast with detailed episodes', async () => {
         const mockCachePodcastRepository = new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient()));
 
-        mockCachePodcastRepository.getById = jest.fn(() => Promise.resolve(podcastDetails));
         mockCachePodcastRepository.get = jest.fn(() => Promise.resolve(podcast));
-        const getDetailedPodcast= new GetDetailedPodcast(mockCachePodcastRepository);
+        mockCachePodcastRepository.getById = jest.fn(() => Promise.resolve(podcastDetails));
 
-        const result = await getDetailedPodcast.execute(1535809341)
+        const getDetailedPodcast= new GetDetailedEpisode(mockCachePodcastRepository);
+
+        const result = await getDetailedPodcast.execute(1535809341, 123)
 
         expect(result).toEqual(expectedResult)
     })
