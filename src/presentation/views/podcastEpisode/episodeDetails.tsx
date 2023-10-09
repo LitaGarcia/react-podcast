@@ -6,7 +6,7 @@ import {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../../domain/model/podcast";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {Episode} from "../../../domain/model/episode";
-import {GetDetailedEpisodes} from "../../../application/getDetailedEpisodes";
+import {GetDetailedEpisode} from "../../../application/getDetailedEpisode";
 
 
 export default function EpisodeDetails( ){
@@ -15,7 +15,7 @@ export default function EpisodeDetails( ){
     const systemClock = SystemClock();
     const {episodeId, podcastId} = useParams();
     const [podcast, setPodcast] = useState<Podcast>();
-    const getDetailedEpisodes= new GetDetailedEpisodes(new localStoreCacheRepository(systemClock, httpPodcastRepository));
+    const getDetailedEpisodes= new GetDetailedEpisode(new localStoreCacheRepository(systemClock, httpPodcastRepository));
 
     const getPodcast = useCallback(async () => {
         const response = await getDetailedEpisodes.execute(+podcastId! ,+episodeId!)

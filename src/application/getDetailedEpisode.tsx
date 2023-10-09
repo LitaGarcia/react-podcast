@@ -2,7 +2,7 @@ import {CacheRepository} from "../domain/cacheRepository";
 import {Podcast} from "../domain/model/podcast";
 import {Episode} from "../domain/model/episode";
 
-export class GetDetailedEpisodes {
+export class GetDetailedEpisode {
     private _cachePodcastRepository: CacheRepository;
     constructor(cachePodcastRepository: CacheRepository) {
         this._cachePodcastRepository = cachePodcastRepository;
