@@ -44,7 +44,7 @@ describe( 'getPodcastLookup' ,() => {
                 releaseDate: 'episode.releaseDate',
                 trackTime: 'episode.trackTimeMillis',
                 description: 'description',
-                url: 'url'
+                url: 'episodeUrl'
             }
         ]
     }
