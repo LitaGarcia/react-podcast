@@ -4,21 +4,21 @@ import {SystemClock} from "../../../infraestructure/time/systemClock";
 import {useParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../../domain/model/podcast";
-import {GetDetailedPodcast} from "../../../application/getDetailedPodcast";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {Episode} from "../../../domain/model/episode";
+import {GetDetailedEpisodes} from "../../../application/getDetailedEpisodes";
 
 
 export default function EpisodeDetails( ){
     const httpClient = new HttpClient()
     const httpPodcastRepository = new HttpPodcastRepository(httpClient);
     const systemClock = SystemClock();
-    const {podcastId} = useParams();
+    const {episodeId, podcastId} = useParams();
     const [podcast, setPodcast] = useState<Podcast>();
-    const getPodcastLookup= new GetDetailedPodcast(new localStoreCacheRepository(systemClock, httpPodcastRepository));
+    const getDetailedEpisodes= new GetDetailedEpisodes(new localStoreCacheRepository(systemClock, httpPodcastRepository));
 
     const getPodcast = useCallback(async () => {
-        const response = await getPodcastLookup.execute(+podcastId!)
+        const response = await getDetailedEpisodes.execute(+podcastId! ,+episodeId!)
         console.log(response)
         setPodcast(response);
 
