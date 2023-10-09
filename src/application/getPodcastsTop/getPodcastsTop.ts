@@ -1,4 +1,4 @@
-import {CacheRepository} from "../domain/cacheRepository";
+import {CacheRepository} from "../../domain/cacheRepository";
 
 export class GetPodcastsTop {
     private _cachePodcastRepository: CacheRepository;

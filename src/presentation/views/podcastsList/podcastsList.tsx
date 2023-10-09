@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Podcast} from "../../../domain/model/podcast";
 import {HttpPodcastRepository} from "../../../infraestructure/repositories/http/httpPodcastRepository";
-import {GetPodcastsTop} from "../../../application/getPodcastsTop";
+import {GetPodcastsTop} from "../../../application/getPodcastsTop/getPodcastsTop";
 import {SystemClock} from "../../../infraestructure/time/systemClock";
 import Header from "../header/header";
 import {TargetValueEvent} from "./targetValueEvent";

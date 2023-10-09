@@ -27,7 +27,7 @@ export class localStoreCacheRepository implements CacheRepository {
 
         if (!storedData || this.isStoredMoreThanOneDay(storedData!)) {
             const podcastLookup = await this._podcastRepository.getPodcastById(id);
-            this.save(`podcastLookup-${id}`, podcastLookup);
+            this.save(`podcastLookup-${id}`, [podcastLookup]);
             return podcastLookup
         }
         return JSON.parse(storedData!).podcasts
@@ -49,7 +49,7 @@ export class localStoreCacheRepository implements CacheRepository {
         const storedDataParsed = JSON.parse(storedData!);
         const currentDay = this._clock.now();
         const lastDayStored = storedDataParsed.storedAt;
-        return  currentDay - lastDayStored > dayInMs
+        return  currentDay - lastDayStored >= dayInMs
     }
 
 }

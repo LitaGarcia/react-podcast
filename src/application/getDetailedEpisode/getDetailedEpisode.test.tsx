@@ -59,6 +59,7 @@ describe( 'getDetailedEpisode' ,() => {
 
         const result = await getDetailedPodcast.execute(1535809341, 123)
 
+        expect(result.episodes?.length).toEqual(1);
         expect(result).toEqual(expectedResult)
     })
 
