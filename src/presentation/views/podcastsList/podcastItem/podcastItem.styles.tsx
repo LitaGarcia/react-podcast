@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import '../../styles/variables.css';
+import '../../../styles/variables.css';
 
 export const Li = styled.li `
   display: flex;
@@ -15,7 +15,7 @@ export const Li = styled.li `
     }
 `
 
-export const PodcastTitle = styled.p `
+export const PodcastTitle = styled.h3 `
   text-transform: uppercase;
   font-weight: bold;
 `

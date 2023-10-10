@@ -11,7 +11,6 @@ export default function PodcastItem({podcast}: any){
             <PodcastTitle>{podcast.name}</PodcastTitle>
             <p>Author: {podcast.author}</p>
         </TextContainer>
-
         </Li>
     )
 }

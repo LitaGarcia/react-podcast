@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {Episode} from "../../../domain/model/episode";
+import {Episode} from "../../../../domain/model/episode";
 
 
 export default function PodcastDetailsEpisodes(props: any ){
@@ -19,7 +19,6 @@ export default function PodcastDetailsEpisodes(props: any ){
 
 return(
     <>
-        <p>{props.podcast.episodes[0].id}</p>
         <p>{episodeList}</p>
 
     </>

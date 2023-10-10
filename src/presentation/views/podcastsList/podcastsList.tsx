@@ -5,7 +5,7 @@ import {GetPodcastsTop} from "../../../application/getPodcastsTop/getPodcastsTop
 import {SystemClock} from "../../../infraestructure/time/systemClock";
 import Header from "../header/header";
 import {TargetValueEvent} from "./targetValueEvent";
-import PodcastItem from "../podcastItem/podcastItem";
+import PodcastItem from "./podcastItem/podcastItem";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
 import {GetFilteredPodcasts} from "../../../application/getFilteredData/getFilteredPodcasts";

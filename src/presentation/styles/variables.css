@@ -1,5 +1,6 @@
 :root {
     --primary-font-family: caption;
+    --size-xs: 0.85rem;
     --size-sm: 1rem;
     --size-m: 1.5rem;
 }
