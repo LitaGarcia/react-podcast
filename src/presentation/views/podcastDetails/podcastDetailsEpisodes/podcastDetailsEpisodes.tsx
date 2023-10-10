@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {Episode} from "../../../../domain/model/episode";
-import {Th, Link} from "./podcastDetailsEpisodes.styles";
+import {Tr, Link} from "./podcastDetailsEpisodes.styles";
 
 
 export default function PodcastDetailsEpisodes(props: any ){
@@ -11,7 +11,7 @@ export default function PodcastDetailsEpisodes(props: any ){
         return (
             <>
 
-            <Th>
+            <Tr>
                 <td>
                     <Link onClick={() => navigate(`/podcast/${props.podcast.id}/episode/${episode.id}`) } key={props.podcast.id}>
                     {episode.title}
@@ -19,7 +19,7 @@ export default function PodcastDetailsEpisodes(props: any ){
                 </td>
                 <td>{episode.releaseDate}</td>
                 <td>{episode.trackTime}</td>
-            </Th>
+            </Tr>
             </>
         )
     })

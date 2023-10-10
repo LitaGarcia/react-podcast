@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-export const Th = styled.th `
+export const Tr = styled.tr `
   display: flex;
   flex-direction: row;
+  
 `
 
 export const Link = styled.a`

@@ -7,6 +7,9 @@ import {Podcast} from "../../../domain/model/podcast";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {Episode} from "../../../domain/model/episode";
 import {GetDetailedEpisode} from "../../../application/getDetailedEpisode/getDetailedEpisode";
+import {DetailedPodcastCard} from "../detailedPodcastCard/detailedPodcastCard";
+import {Audio, Container, Description, Section, Title} from "./episodeDetails.styles";
+import Header from "../header/header";
 
 
 export default function EpisodeDetails( ){
@@ -34,11 +37,20 @@ export default function EpisodeDetails( ){
         console.log(podcast)
         return (
             <>
-                <li>
-                    <audio  controls>
-                        <source src={episode.url} type="audio/mpeg" />
-                    </audio>
-                </li>
+                <Header></Header>
+                <Section>
+                    <DetailedPodcastCard podcast={podcast}>
+                    </DetailedPodcastCard>
+
+                    <Container>
+                        <Title>{episode.title}</Title>
+                        <Description>{episode.description}</Description>
+                        <Audio  controls>
+                            <source src={episode.url} type="audio/mpeg" />
+                        </Audio>
+                    </Container>
+
+                </Section>
             </>
         )
     })

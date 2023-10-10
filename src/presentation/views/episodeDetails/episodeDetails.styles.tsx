@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DetailsSection = styled.section `
+export const Section = styled.section `
   border-top: gainsboro 0.5px solid;
   display: flex;
   flex-direction: column;
@@ -15,31 +15,30 @@ export const DetailsSection = styled.section `
   }
 `
 
-export const TitleSection = styled.div `
+export const Container = styled.div `
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   padding: var(--size-m);
   -moz-box-shadow: -1px 6px 13px 0px rgba(158,158,158,1);
   box-shadow: -1px 6px 13px 0px gainsboro;
   font-size: var(--size-sm);
-  font-weight: bold;
-  width: 80%;
   @media (min-width: 1024px) {
-    width: 100%
+    width: 50%;
   }
 `
-export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-m);
+
+export const Title = styled.h3 `
+    margin-bottom: var(--size-sm);
+    font-weight: bold;
 `
-export const Table = styled.table `
-  
-  td:first-child{
-    width: 80%;
-  }
-  th:nth-child(odd) {
-    background-color: gainsboro;
-  }
-  th:nth-child(even)  {
-    background-color: white;
-  }
+
+export const Description = styled.p `
+  margin-bottom: var(--size-sm);
+  font-style: italic;
+`
+
+export const Audio = styled.audio `
+    width: 100%;
 `

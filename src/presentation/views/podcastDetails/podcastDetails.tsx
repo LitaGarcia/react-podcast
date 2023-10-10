@@ -11,10 +11,9 @@ import {HttpClient} from "../../../infraestructure/repositories/http/httpClient"
 import Header from "../header/header";
 import {
     DetailsSection,
-    PodcastDetailedAuthor, PodcastDetailedDesc, PodcastDetailedEpisodesSection, PodcastDetailedEpisodesTitleContainer,
-    PodcastDetailedItem,
-    PodcastDetailedName, Table
+    Section, TitleSection, Table
 } from "./podcastDetails.styles";
+import {DetailedPodcastCard} from "../detailedPodcastCard/detailedPodcastCard";
 
 export default function PodcastDetails() {
     const httpClient = new HttpClient()
@@ -41,27 +40,11 @@ export default function PodcastDetails() {
         <>
             <Header></Header>
             <DetailsSection>
-                <PodcastDetailedItem>
-                    <img src={podcast?.img} alt={podcast?.name}>
-                    </img>
-                    <PodcastDetailedName>
-                        {podcast?.name}
-                    </PodcastDetailedName>
-                    <PodcastDetailedAuthor>
-                        by: {podcast?.author}
-                    </PodcastDetailedAuthor>
-                    <p>
-                    Description:
-                    </p>
-                    <PodcastDetailedDesc>
-                        {podcast?.description}
-                    </PodcastDetailedDesc>
-            </PodcastDetailedItem>
-
-                <PodcastDetailedEpisodesSection>
-                    <PodcastDetailedEpisodesTitleContainer>
+                <DetailedPodcastCard podcast={podcast}> </DetailedPodcastCard>
+                <Section>
+                    <TitleSection>
                         <p>Episodes: {podcast?.episodes?.length}</p>
-                    </PodcastDetailedEpisodesTitleContainer>
+                    </TitleSection>
                 <Table>
                     <tbody>
                     {
@@ -69,7 +52,7 @@ export default function PodcastDetails() {
                     }
                     </tbody>
                 </Table>
-                </PodcastDetailedEpisodesSection>
+                </Section>
                 </DetailsSection>
 
             </>
