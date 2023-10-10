@@ -18,17 +18,19 @@ export default function EpisodeDetails( ){
     const systemClock = SystemClock();
     const {episodeId, podcastId} = useParams();
     const [podcast, setPodcast] = useState<Podcast>();
+    const [isLoading, setIsLoading] = useState(true);
     const getDetailedEpisodes= new GetDetailedEpisode(new localStoreCacheRepository(systemClock, httpPodcastRepository));
 
     const getPodcast = useCallback(async () => {
         const response = await getDetailedEpisodes.execute(+podcastId! ,+episodeId!)
-        console.log(response)
         setPodcast(response);
+        setIsLoading(false)
 
     }, []);
 
 
     useEffect(() => {
+        setIsLoading(true)
         getPodcast();
     }, []);
 
@@ -37,7 +39,7 @@ export default function EpisodeDetails( ){
         console.log(podcast)
         return (
             <>
-                <Header></Header>
+                <Header isLoading={isLoading}></Header>
                 <Section>
                     <DetailedPodcastCard podcast={podcast}>
                     </DetailedPodcastCard>

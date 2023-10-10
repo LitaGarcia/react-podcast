@@ -36,10 +36,10 @@ export const Table = styled.table `
   td:first-child{
     width: 80%;
   }
-  th:nth-child(odd) {
+  tr:nth-child(odd) {
     background-color: gainsboro;
   }
-  th:nth-child(even)  {
+  tr:nth-child(even)  {
     background-color: white;
   }
 `

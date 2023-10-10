@@ -3,7 +3,7 @@ import {Container, Link, Nav} from "./header.styles"
 import Loading from "../loader/loading";
 
 
-export default function Header() {
+export default function Header({isLoading}: any) {
     const navigate = useNavigate();
     return (
         <>
@@ -13,7 +13,7 @@ export default function Header() {
                 Podcaster
             </Link>
             </Nav>
-            <Loading></Loading>
+                {isLoading ? <Loading></Loading> : ''}
             </Container>
         </>
     )
