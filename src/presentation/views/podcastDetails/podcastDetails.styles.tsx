@@ -32,7 +32,9 @@ export const Section = styled.section`
   gap: var(--size-m);
 `
 export const Table = styled.table `
-  
+  padding: var(--size-m);
+  -moz-box-shadow: -1px 6px 13px 0px rgba(158,158,158,1);
+  box-shadow: -1px 6px 13px 0px gainsboro;
   td:first-child{
     width: 80%;
   }
