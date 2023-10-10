@@ -9,6 +9,7 @@ import PodcastItem from "../podcastItem/podcastItem";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
 import {GetFilteredPodcasts} from "../../../application/getFilteredData/getFilteredPodcasts";
+import {NumberBox, Form, ListSection, Ul} from "./podcastsList.styles";
 
 export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<any>([]);
@@ -38,16 +39,23 @@ export default function PodcastsList() {
             <>
                 <Header></Header>
                 <main>
-                    <form>
+
+                <ListSection>
+
+                    <Form>
+                        <NumberBox>{podcastList.length}</NumberBox>
                         <input
                             type="text"
                             name="searchName"
                             id="searchName"
+                            placeholder='Filter podcasts...'
                             onChange={searchByName}
                             value={searchName}
                         ></input>
-                    </form>
-                    <ul>{podcastList}</ul>
+                    </Form>
+                    <Ul>{podcastList}</Ul>
+                </ListSection>
+
                 </main>
             </>
     );

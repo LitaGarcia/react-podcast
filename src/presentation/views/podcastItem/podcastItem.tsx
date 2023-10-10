@@ -1,12 +1,17 @@
 import {useNavigate} from "react-router-dom";
+import {Li, PodcastTitle, TextContainer} from "./podcastItem.styles";
 
 export default function PodcastItem({podcast}: any){
     const navigate = useNavigate();
+    console.log(podcast)
     return (
-        <li onClick={() => navigate(`/podcast/${podcast.id}`)}>
+        <Li onClick={() => navigate(`/podcast/${podcast.id}`)}>
             <img src={podcast.img} alt={podcast.name}></img>
-            <p>{podcast.name}</p>
-            <p>{podcast.author}</p>
-        </li>
+        <TextContainer>
+            <PodcastTitle>{podcast.name}</PodcastTitle>
+            <p>Author: {podcast.author}</p>
+        </TextContainer>
+
+        </Li>
     )
 }
