@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export const PodcastContainer = styled.section `
+export const DetailsSection = styled.section `
   border-top: gainsboro 0.5px solid;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding-top: var(--size-m);
   gap: var(--size-m);
+  margin: var(--size-sm);
 
   @media (min-width: 1024px) {
     flex-direction: row;
@@ -19,6 +20,7 @@ export const PodcastDetailedItem = styled.div `
   flex-direction: column;
   cursor: pointer;
   width: 250px;
+  height: 100%;
   -moz-box-shadow: -1px 6px 13px 0px rgba(158,158,158,1);
   box-shadow: -1px 6px 13px 0px gainsboro;
   padding: var(--size-m);
@@ -51,10 +53,25 @@ export const PodcastDetailedEpisodesTitleContainer = styled.div `
   box-shadow: -1px 6px 13px 0px gainsboro;
   font-size: var(--size-sm);
   font-weight: bold;
-  width: 100%;
+  width: 80%;
+  @media (min-width: 1024px) {
+    width: 100%
+  }
 `
 export const PodcastDetailedEpisodesSection = styled.section`
   display: flex;
   flex-direction: column;
   gap: var(--size-m);
+`
+export const Table = styled.table `
+  
+  td:first-child{
+    width: 80%;
+  }
+  th:nth-child(odd) {
+    background-color: gainsboro;
+  }
+  th:nth-child(even)  {
+    background-color: white;
+  }
 `

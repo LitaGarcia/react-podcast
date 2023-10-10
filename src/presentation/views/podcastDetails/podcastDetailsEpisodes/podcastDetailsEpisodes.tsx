@@ -1,17 +1,25 @@
 import {useNavigate} from "react-router-dom";
 import {Episode} from "../../../../domain/model/episode";
+import {Th, Link} from "./podcastDetailsEpisodes.styles";
 
 
 export default function PodcastDetailsEpisodes(props: any ){
     const navigate = useNavigate();
 
 
-    const episodeList = props.podcast.episodes.map((episode: Episode, i: number) => {
+    const episodeList = props.podcast.episodes.map((episode: Episode) => {
         return (
             <>
-            <li onClick={() => navigate(`/podcast/${props.podcast.id}/episode/${episode.id}`) } key={i}>
-                <p>{episode.title}</p>
-            </li>
+
+            <Th>
+                <td>
+                    <Link onClick={() => navigate(`/podcast/${props.podcast.id}/episode/${episode.id}`) } key={props.podcast.id}>
+                    {episode.title}
+                </Link>
+                </td>
+                <td>{episode.releaseDate}</td>
+                <td>{episode.trackTime}</td>
+            </Th>
             </>
         )
     })
@@ -19,8 +27,7 @@ export default function PodcastDetailsEpisodes(props: any ){
 
 return(
     <>
-        <p>{episodeList}</p>
-
+        {episodeList}
     </>
 )
 }

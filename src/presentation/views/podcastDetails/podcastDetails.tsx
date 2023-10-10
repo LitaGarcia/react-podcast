@@ -10,10 +10,10 @@ import {HttpPodcastRepository} from "../../../infraestructure/repositories/http/
 import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
 import Header from "../header/header";
 import {
-    PodcastContainer,
+    DetailsSection,
     PodcastDetailedAuthor, PodcastDetailedDesc, PodcastDetailedEpisodesSection, PodcastDetailedEpisodesTitleContainer,
     PodcastDetailedItem,
-    PodcastDetailedName
+    PodcastDetailedName, Table
 } from "./podcastDetails.styles";
 
 export default function PodcastDetails() {
@@ -36,11 +36,11 @@ export default function PodcastDetails() {
         getPodcast();
     }, []);
 
-
+    console.log(podcast)
     return (
         <>
             <Header></Header>
-            <PodcastContainer>
+            <DetailsSection>
                 <PodcastDetailedItem>
                     <img src={podcast?.img} alt={podcast?.name}>
                     </img>
@@ -62,13 +62,15 @@ export default function PodcastDetails() {
                     <PodcastDetailedEpisodesTitleContainer>
                         <p>Episodes: {podcast?.episodes?.length}</p>
                     </PodcastDetailedEpisodesTitleContainer>
-                <ul>
+                <Table>
+                    <tbody>
                     {
                         podcast ? <PodcastDetailsEpisodes podcast={podcast} />  : null
                     }
-                </ul>
+                    </tbody>
+                </Table>
                 </PodcastDetailedEpisodesSection>
-                </PodcastContainer>
+                </DetailsSection>
 
             </>
     )
