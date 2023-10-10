@@ -19,13 +19,13 @@ export default function EpisodeDetails( ){
     const {episodeId, podcastId} = useParams();
     const [podcast, setPodcast] = useState<Podcast>();
     const [isLoading, setIsLoading] = useState(true);
-    const getDetailedEpisodes= new GetDetailedEpisode(new localStoreCacheRepository(systemClock, httpPodcastRepository));
+    const storeCacheRepository = new localStoreCacheRepository(systemClock);
+    const getDetailedEpisodes= new GetDetailedEpisode(storeCacheRepository, httpPodcastRepository);
 
     const getPodcast = useCallback(async () => {
         const response = await getDetailedEpisodes.execute(+podcastId! ,+episodeId!)
         setPodcast(response);
         setIsLoading(false)
-
     }, []);
 
 

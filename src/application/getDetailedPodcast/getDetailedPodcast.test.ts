@@ -5,7 +5,7 @@ import {localStoreCacheRepository} from "../../infraestructure/repositories/loca
 import {HttpClient} from "../../infraestructure/repositories/http/httpClient";
 
 describe( 'getPodcastLookup' ,() => {
-    const podcastDetails = {
+    const detailedPodcast = {
         id: 1535809341,
         img: 'im:image',
         name: 'im:name',
@@ -26,6 +26,7 @@ describe( 'getPodcastLookup' ,() => {
             img: 'im:image',
             name: 'im:name',
             author: 'im:artist',
+            episodeNumbers: 2,
             description: 'description'
         }
     ]
@@ -36,7 +37,7 @@ describe( 'getPodcastLookup' ,() => {
         name: 'im:name',
         author: 'im:artist',
         description: 'description',
-        episodeNumbers: undefined,
+        episodeNumbers: 2,
         episodes: [
             {
                 id: 123,
@@ -49,16 +50,26 @@ describe( 'getPodcastLookup' ,() => {
         ]
     }
 
-    it ('should return a podcast with episodes', async () => {
-        const mockCachePodcastRepository = new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient()));
 
-        mockCachePodcastRepository.getById = jest.fn(() => Promise.resolve(podcastDetails));
-        mockCachePodcastRepository.get = jest.fn(() => Promise.resolve(podcast));
-        const getDetailedPodcast= new GetDetailedPodcast(mockCachePodcastRepository);
+    const httpPodcastRepository = new HttpPodcastRepository(new HttpClient);
+    const storeCacheRepository = new localStoreCacheRepository(SystemClock());
+    const getDetailedPodcast= new GetDetailedPodcast(storeCacheRepository, httpPodcastRepository);
+
+    it ('should return a detailedPodcast when there are entries in cache', async () => {
+        storeCacheRepository.get = jest.fn(() => Promise.resolve(podcast));
+        storeCacheRepository.getById = jest.fn(() => Promise.resolve(detailedPodcast));
+        const result = await getDetailedPodcast.execute(1535809341)
+
+        expect(result).toEqual(expectedResult)
+    })
+    it ('should return a detailedPodcast when there are no entries in cache or are expired', async () => {
+        storeCacheRepository.getById = jest.fn(() => Promise.resolve(null));
+        storeCacheRepository.get = jest.fn(() => Promise.resolve([]));
+        httpPodcastRepository.getPodcast = jest.fn(() => Promise.resolve(podcast));
+        httpPodcastRepository.getPodcastById = jest.fn(() => Promise.resolve(detailedPodcast));
 
         const result = await getDetailedPodcast.execute(1535809341)
 
         expect(result).toEqual(expectedResult)
     })
-
 })

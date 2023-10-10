@@ -1,16 +1,31 @@
 import {CacheRepository} from "../../domain/cacheRepository";
 import {Podcast} from "../../domain/model/podcast";
 import {Episode} from "../../domain/model/episode";
+import {PodcastRepository} from "../../domain/podcastRepository";
 
 export class GetDetailedEpisode {
     private _cachePodcastRepository: CacheRepository;
-    constructor(cachePodcastRepository: CacheRepository) {
+    private _podcastRepository: PodcastRepository;
+    constructor(cachePodcastRepository: CacheRepository, podcastRepository: PodcastRepository) {
         this._cachePodcastRepository = cachePodcastRepository;
+        this._podcastRepository = podcastRepository;
     }
     execute = async (podcastId: number, episodeId:number): Promise<Podcast> => {
-        const podcasts = await this._cachePodcastRepository.get();
+        let podcasts = await this._cachePodcastRepository.get()
+        if (podcasts.length === 0) {
+            podcasts = await this._podcastRepository.getPodcast();
+            this._cachePodcastRepository.save('podcast', podcasts);
+        }
         const podcast = podcasts.find((p: Podcast) => p.id === podcastId);
-        const detailedPodcast = await this._cachePodcastRepository.getById(podcastId);
+        if(!podcast) {
+            console.log('The podcast has not been found')
+        }
+        let detailedPodcast = await this._cachePodcastRepository.getById(podcastId);
+        if(!detailedPodcast){
+            detailedPodcast = await this._podcastRepository.getPodcastById(podcastId);
+            this._cachePodcastRepository.save(`detailedPodcast-${podcastId}`, detailedPodcast);
+        }
+
         const selectedEpisode = detailedPodcast?.episodes?.find((episode: Episode) => episode.id === episodeId);
 
         if (!podcast) {

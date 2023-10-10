@@ -9,12 +9,14 @@ import PodcastItem from "./podcastItem/podcastItem";
 import {localStoreCacheRepository} from "../../../infraestructure/repositories/localStore/localStoreCacheRepository";
 import {HttpClient} from "../../../infraestructure/repositories/http/httpClient";
 import {GetFilteredPodcasts} from "../../../application/getFilteredData/getFilteredPodcasts";
-import {NumberBox, Form, ListSection, Ul} from "./podcastsList.styles";
+import {NumberBox, Form, SectionList, Ul} from "./podcastsList.styles";
 
 export default function PodcastsList() {
     const [podcasts, setPodcasts] = useState<any>([]);
     const [searchName, setSearchName] = useState('');
-    const getPodcastsTop = new GetPodcastsTop(new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient())));
+    const httpPodcastRepository = new HttpPodcastRepository(new HttpClient());
+    const storeCacheRepository = new localStoreCacheRepository(SystemClock());
+    const getPodcastsTop = new GetPodcastsTop(storeCacheRepository, httpPodcastRepository);
     const getFilteredPodcasts = new GetFilteredPodcasts();
     const searchByName = (ev: TargetValueEvent ) => setSearchName(ev.currentTarget.value);
 
@@ -39,9 +41,7 @@ export default function PodcastsList() {
             <>
                 <Header></Header>
                 <main>
-
-                <ListSection>
-
+                <SectionList>
                     <Form>
                         <NumberBox>{podcastList.length}</NumberBox>
                         <input
@@ -54,7 +54,7 @@ export default function PodcastsList() {
                         ></input>
                     </Form>
                     <Ul>{podcastList}</Ul>
-                </ListSection>
+                </SectionList>
 
                 </main>
             </>

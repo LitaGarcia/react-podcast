@@ -21,7 +21,8 @@ export default function PodcastDetails() {
     const systemClock = SystemClock();
     const {podcastId} = useParams();
     const [podcast, setPodcast] = useState<Podcast>();
-    const getPodcastLookup= new GetDetailedPodcast(new localStoreCacheRepository(systemClock, httpPodcastRepository));
+    const storeCacheRepository = new localStoreCacheRepository(systemClock);
+    const getPodcastLookup= new GetDetailedPodcast(storeCacheRepository, httpPodcastRepository);
 
     const getPodcast = useCallback(async () => {
         const response = await getPodcastLookup.execute(+podcastId!)

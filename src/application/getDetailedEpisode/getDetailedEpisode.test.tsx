@@ -5,7 +5,7 @@ import {HttpClient} from "../../infraestructure/repositories/http/httpClient";
 import {GetDetailedEpisode} from "./getDetailedEpisode";
 
 describe( 'getDetailedEpisode' ,() => {
-    const podcastDetails = {
+    const detailedPodcast = {
         id: 1535809341,
         img: 'im:image',
         name: 'im:name',
@@ -49,17 +49,28 @@ describe( 'getDetailedEpisode' ,() => {
         ]
     }
 
-    it ('should return a podcast with detailed episodes', async () => {
-        const mockCachePodcastRepository = new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient()));
+    const httpPodcastRepository = new HttpPodcastRepository(new HttpClient);
+    const storeCacheRepository = new localStoreCacheRepository(SystemClock());
+    const getDetailedEpisodee= new GetDetailedEpisode(storeCacheRepository, httpPodcastRepository);
 
-        mockCachePodcastRepository.get = jest.fn(() => Promise.resolve(podcast));
-        mockCachePodcastRepository.getById = jest.fn(() => Promise.resolve(podcastDetails));
+    it ('should return a podcast with detailed episodes when there are entries in cache', async () => {
+        storeCacheRepository.get = jest.fn(() => Promise.resolve(podcast));
+        storeCacheRepository.getById = jest.fn(() => Promise.resolve(detailedPodcast));
 
-        const getDetailedPodcast= new GetDetailedEpisode(mockCachePodcastRepository);
-
-        const result = await getDetailedPodcast.execute(1535809341, 123)
+        const result = await getDetailedEpisodee.execute(1535809341, 123)
 
         expect(result.episodes?.length).toEqual(1);
+        expect(result).toEqual(expectedResult)
+    })
+
+    it ('should return a detailedPodcast with episodes when there are no entries in cache or are expired', async () => {
+        storeCacheRepository.getById = jest.fn(() => Promise.resolve(null));
+        storeCacheRepository.get = jest.fn(() => Promise.resolve([]));
+        httpPodcastRepository.getPodcast = jest.fn(() => Promise.resolve(podcast));
+        httpPodcastRepository.getPodcastById = jest.fn(() => Promise.resolve(detailedPodcast));
+
+        const result = await getDetailedEpisodee.execute(1535809341, 123)
+
         expect(result).toEqual(expectedResult)
     })
 

@@ -14,16 +14,22 @@ describe( 'getPodcastsTop' ,() => {
             description: 'description'
         }
     ]
+    const httpPodcastRepository = new HttpPodcastRepository(new HttpClient);
+    const storeCacheRepository = new localStoreCacheRepository(SystemClock());
+    const getPodcastsTop = new GetPodcastsTop(storeCacheRepository, httpPodcastRepository)
 
-    it ('should return a podcast', async () => {
-
-        const mockCachePodcastRepository = new localStoreCacheRepository(SystemClock(), new HttpPodcastRepository(new HttpClient()));
-        mockCachePodcastRepository.get = jest.fn(() => Promise.resolve(podcast));
-        const getPodcastsTop = new GetPodcastsTop(mockCachePodcastRepository)
-
+    it ('should return a podcasts list when there are entries in cache', async () => {
+        storeCacheRepository.get = jest.fn(() => Promise.resolve(podcast));
         const result = await getPodcastsTop.execute()
 
         expect(result).toEqual(podcast)
+    })
+    it ('should return a podcasts list when there are no entries in cache or are expired', async () => {
+        storeCacheRepository.get = jest.fn(() => Promise.resolve([]));
+        httpPodcastRepository.getPodcast = jest.fn( () => Promise.resolve(podcast))
+        const result = await getPodcastsTop.execute()
+
+        expect(result).toEqual(podcast);
     })
 
 })

@@ -1,39 +1,33 @@
 import {Clock} from "../../../domain/clock";
-import {PodcastRepository} from "../../../domain/podcastRepository";
 import {Podcast} from "../../../domain/model/podcast";
 import {PodcastDTO} from "./podcastDTO";
 import {CacheRepository} from "../../../domain/cacheRepository";
 
 export class localStoreCacheRepository implements CacheRepository {
-    private _podcastRepository: PodcastRepository;
     private _clock: Clock;
-    constructor (clock: Clock, podcastRepository: PodcastRepository) {
+
+    constructor (clock: Clock) {
         this._clock = clock;
-        this._podcastRepository = podcastRepository;
     }
+
     async get(): Promise<Podcast[]> {
         const storedData = localStorage.getItem('podcast');
-
-        if (!storedData || this.isStoredMoreThanOneDay(storedData)) {
-            const podcastList = await this._podcastRepository.getPodcast();
-            this.save('podcast', podcastList);
-            return podcastList
+        console.log(storedData)
+        if (storedData === null || this.isStoredMoreThanOneDay(storedData!)) {
+            return []
         }
         return JSON.parse(storedData!).podcasts
     }
 
-    async getById(id: number): Promise<Podcast> {
-        const storedData = localStorage.getItem(`podcastLookup-${id}`);
-
-        if (!storedData || this.isStoredMoreThanOneDay(storedData!)) {
-            const podcastLookup = await this._podcastRepository.getPodcastById(id);
-            this.save(`podcastLookup-${id}`, podcastLookup);
-            return podcastLookup
+    async getById(id: number): Promise<Podcast | null> {
+        const storedData = localStorage.getItem(`detailedPodcast-${id}`);
+        if (storedData === null || this.isStoredMoreThanOneDay(storedData!)) {
+            return null
         }
         return JSON.parse(storedData!).podcasts
     }
 
-    private save(key: string, dataToStore: any): any {
+    save(key: string, dataToStore: any): void {
         const currentDay = this._clock.now();
 
         const podcastToSave: PodcastDTO = {
@@ -41,7 +35,6 @@ export class localStoreCacheRepository implements CacheRepository {
             podcasts: dataToStore
         }
         localStorage.setItem(key, JSON.stringify(podcastToSave));
-
     }
 
     private isStoredMoreThanOneDay(storedData: string) {

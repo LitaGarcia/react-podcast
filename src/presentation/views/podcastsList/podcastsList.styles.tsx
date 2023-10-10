@@ -22,7 +22,7 @@ export const Ul = styled.ul `
   }
 `
 
-export const ListSection = styled.section `
+export const SectionList = styled.section `
   border-top: gainsboro 0.5px solid;
   
 `
