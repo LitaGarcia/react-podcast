@@ -24,7 +24,7 @@ describe('localStoreCacheRepository', () => {
         }]
     }
 
-    const podcastDTO2 = {
+    const detailedPodcastDTO = {
         storedAt: 1696681024,
         podcasts: {
             id: 1535809341,
@@ -100,7 +100,7 @@ describe('localStoreCacheRepository', () => {
         const result = await cacheRepository.getById(mockPodcastId);
 
         expect(result).toEqual(podcast);
-        expect(localStorage.setItem).toHaveBeenCalledWith('podcastLookup-'+ mockPodcastId, JSON.stringify(podcastDTO))
+        expect(localStorage.setItem).toHaveBeenCalledWith('podcastLookup-'+ mockPodcastId, JSON.stringify(detailedPodcastDTO))
     });
 
     it('should fetch and store detailedPodcast if storage is expired more than one day', async () => {
@@ -110,7 +110,7 @@ describe('localStoreCacheRepository', () => {
 
 
         mockSystemClock.now = jest.fn(() => dayNotExpiredInMs + dayInMs)
-        const newData = { storedAt: mockSystemClock.now(), podcasts: [podcast] };
+        const newData = { storedAt: mockSystemClock.now(), podcasts: podcast };
 
         httpPodcastRepository.getPodcastById = jest.fn(() => Promise.resolve(podcast));
 

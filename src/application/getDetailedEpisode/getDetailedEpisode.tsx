@@ -10,8 +10,8 @@ export class GetDetailedEpisode {
     execute = async (podcastId: number, episodeId:number): Promise<Podcast> => {
         const podcasts = await this._cachePodcastRepository.get();
         const podcast = podcasts.find((p: Podcast) => p.id === podcastId);
-        const podcastLookUp = await this._cachePodcastRepository.getById(podcastId);
-        const selectedEpisode = podcastLookUp?.episodes?.find((episode: Episode) => episode.id === episodeId);
+        const detailedPodcast = await this._cachePodcastRepository.getById(podcastId);
+        const selectedEpisode = detailedPodcast?.episodes?.find((episode: Episode) => episode.id === episodeId);
 
         if (!podcast) {
             console.log('The podcast has not been found')

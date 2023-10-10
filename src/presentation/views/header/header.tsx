@@ -1,7 +1,8 @@
 import {useNavigate} from "react-router-dom";
 import {Link, Nav} from "./header.styles"
 
-function Header() {
+
+export default function Header() {
     const navigate = useNavigate();
     return (
         <>
@@ -13,5 +14,3 @@ function Header() {
         </>
     )
 }
-
-export default Header;
