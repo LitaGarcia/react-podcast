@@ -3,6 +3,7 @@ import {Entry, PodcastsResponse} from "./podcastsResponse";
 import {DetailedPodcastResponse, Result} from "./detailedPodcastResponse";
 import {Podcast} from "../../../domain/model/podcast";
 import {HttpClient} from "./httpClient";
+import { format, parseISO } from 'date-fns';
 
 export class HttpPodcastRepository implements PodcastRepository {
     private _httpClient: HttpClient;
@@ -36,12 +37,27 @@ export class HttpPodcastRepository implements PodcastRepository {
                 return {
                     id: episode.trackId,
                     title: episode.trackName,
-                    releaseDate: episode.releaseDate,
-                    trackTime: episode.trackTimeMillis,
+                    releaseDate: this.formatDate(episode.releaseDate),
+                    trackTime: this.formatMillisecondsToMMSS(Number.parseInt(episode.trackTimeMillis)),
                     description: episode.description,
                     url: episode.episodeUrl
                 }
             })
         }
+    }
+
+    private formatMillisecondsToMMSS(milliseconds: number): string {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(seconds).padStart(2, '0');
+
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    private formatDate(dateToFormat: string): string {
+        return format(parseISO(dateToFormat), 'dd/MM/yyyy');
     }
 }

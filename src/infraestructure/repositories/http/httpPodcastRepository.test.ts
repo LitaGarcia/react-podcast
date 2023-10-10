@@ -22,8 +22,8 @@ describe('httpPodcastRepository',
             {
                 id: 123,
                 title: 'name',
-                releaseDate: '1212',
-                trackTime: '12121'
+                releaseDate: '01/01/1212',
+                trackTime: '00:12'
             }
         ]
         }
