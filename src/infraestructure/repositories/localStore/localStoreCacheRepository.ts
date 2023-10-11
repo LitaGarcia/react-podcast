@@ -12,7 +12,6 @@ export class localStoreCacheRepository implements CacheRepository {
 
     async get(): Promise<Podcast[]> {
         const storedData = localStorage.getItem('podcast');
-        console.log(storedData)
         if (storedData === null || this.isStoredMoreThanOneDay(storedData!)) {
             return []
         }

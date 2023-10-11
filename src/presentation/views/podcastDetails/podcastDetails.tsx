@@ -26,9 +26,7 @@ export default function PodcastDetails() {
 
     const getPodcast = useCallback(async () => {
         const response = await getPodcastLookup.execute(+podcastId!)
-        console.log(response)
         setPodcast(response);
-
     }, []);
 
 
@@ -36,7 +34,6 @@ export default function PodcastDetails() {
         getPodcast();
     }, []);
 
-    console.log(podcast)
     return (
         <>
             <Header></Header>

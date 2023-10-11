@@ -36,7 +36,6 @@ export default function EpisodeDetails( ){
 
 
     const episodeList = podcast?.episodes?.map((episode: Episode, i: number) => {
-        console.log(podcast)
         return (
             <>
                 <Header isLoading={isLoading}></Header>

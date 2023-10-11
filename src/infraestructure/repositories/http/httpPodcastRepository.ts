@@ -7,12 +7,11 @@ import { format, parseISO } from 'date-fns';
 
 export class HttpPodcastRepository implements PodcastRepository {
     private _httpClient: HttpClient;
-
     constructor(httpClient: HttpClient) {
         this._httpClient = httpClient;
     }
     getPodcast = async (): Promise<Podcast[]> => {
-        const podcastList: PodcastsResponse = await this._httpClient.fetch('https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json');
+        const podcastList: PodcastsResponse = await this._httpClient.fetch(`https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json`);
         return podcastList.feed.entry.map((p: Entry ) => {
             return {
                 id: Number.parseInt(p.id.attributes["im:id"]),
@@ -23,16 +22,24 @@ export class HttpPodcastRepository implements PodcastRepository {
             }
         })
     }
-    getPodcastById = async (id: number): Promise<Podcast> => {
 
-        const podcastLookupResponse: DetailedPodcastResponse = await this._httpClient.fetch(`https://itunes.apple.com/lookup?id=${id}&entity=podcastEpisode&limit=25`);
-        const podcastEpisodes = podcastLookupResponse.results.slice(1);
+    getPodcastById = async (id: number): Promise<Podcast> => {
+        const URL = "https://itunes.apple.com/lookup?id=";
+        const queryParams = "&entity=podcastEpisode&limit=25";
+        const proxiedUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+            `${URL}${id}${queryParams}`
+        )}`;
+
+        const detailedPodcast = await this._httpClient.fetch(proxiedUrl);
+        const podcastEpisodes = detailedPodcast.results.slice(1);
+        console.log(detailedPodcast);
+        console.log(podcastEpisodes);
         return {
             id: id,
-            img: podcastLookupResponse.results[0].artworkUrl60,
-            name: podcastLookupResponse.results[0].trackName,
-            author: podcastLookupResponse.results[0].artistName,
-            episodeNumbers: podcastLookupResponse.results[0].trackCount,
+            img: detailedPodcast.results[0].artworkUrl60,
+            name: detailedPodcast.results[0].trackName,
+            author: detailedPodcast.results[0].artistName,
+            episodeNumbers: detailedPodcast.results[0].trackCount,
             episodes: podcastEpisodes.map((episode: Result) => {
                 return {
                     id: episode.trackId,
@@ -41,9 +48,10 @@ export class HttpPodcastRepository implements PodcastRepository {
                     trackTime: this.formatMillisecondsToMMSS(Number.parseInt(episode.trackTimeMillis)),
                     description: episode.description,
                     url: episode.episodeUrl
-                }
-            })
-        }
+                    }
+                })
+            }
+
     }
 
     private formatMillisecondsToMMSS(milliseconds: number): string {
