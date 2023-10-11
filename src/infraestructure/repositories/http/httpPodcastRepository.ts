@@ -24,13 +24,7 @@ export class HttpPodcastRepository implements PodcastRepository {
     }
 
     getPodcastById = async (id: number): Promise<Podcast> => {
-        const URL = "https://itunes.apple.com/lookup?id=";
-        const queryParams = "&entity=podcastEpisode&limit=25";
-        const proxiedUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-            `${URL}${id}${queryParams}`
-        )}`;
-
-        const detailedPodcast = await this._httpClient.fetch(proxiedUrl);
+        const detailedPodcast: DetailedPodcastResponse = await this._httpClient.fetch(`https://itunes.apple.com/lookup?id=${id}&entity=podcastEpisode&limit=25`);
         const podcastEpisodes = detailedPodcast.results.slice(1);
         console.log(detailedPodcast);
         console.log(podcastEpisodes);
